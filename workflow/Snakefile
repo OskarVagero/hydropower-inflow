@@ -26,7 +26,6 @@ rule all:
 rule build_hydro_capfac:
     input:
         eiahydrogen="resources/EIA_hydro_generation_1995_2000_2014.csv",
-        #hydroinstalledcap="resources/hydro_installed_cap.tsv",
         euroshape=shared_input_path / "NUTS_RG_10M_2021_4326.geojson",
         weatherdata=shared_input_path / "weatherdata/europe_{year}.nc",
     output:
