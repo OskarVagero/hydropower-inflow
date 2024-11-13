@@ -1,0 +1,8 @@
+paths:
+  gams: /opt/gams/gams47.1_linux_x64_64_sfx/
+  shared_input: /home/oskar/shared_input/
+  results: results
+
+parameters:
+  regions: ["NO"] # NUTS ID
+  years: ['2017']

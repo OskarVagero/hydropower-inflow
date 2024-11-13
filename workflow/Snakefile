@@ -1,0 +1,43 @@
+configfile: "config/config.yaml"
+
+import itertools
+
+import pandas as pd
+import pathlib
+
+cwd = pathlib.Path().resolve()
+
+date_range=["01-01","12-31"]
+
+years = config["parameters"]["years"]
+
+regions = config["parameters"]["regions"]
+resultspath = cwd / pathlib.Path(config["paths"]["results"])
+shared_input_path = cwd / pathlib.Path(config["paths"]["shared_input"])
+
+localrules:
+    all,
+    build_hydro_capfac,
+
+rule all:
+    input:
+        expand(resultspath / "inflow_hydro-res_{year}.csv", year=years),
+
+rule build_hydro_capfac:
+    input:
+        eiahydrogen="resources/EIA_hydro_generation_1995_2000_2014.csv",
+        #hydroinstalledcap="resources/hydro_installed_cap.tsv",
+        euroshape=shared_input_path / "NUTS_RG_10M_2021_4326.geojson",
+        weatherdata=shared_input_path / "weatherdata/europe_{year}.nc",
+    output:
+        hydroresinfl=(
+            resultspath / "inflow_hydro-res_{year}.csv"
+        )
+    conda:
+        "envs/build_hydro_capfac.yml"
+    params:
+        sharedinputpath=shared_input_path,
+        regions=regions,
+        date_range=date_range,
+    notebook:
+        "notebooks/highRES_build_hydro.py.ipynb"

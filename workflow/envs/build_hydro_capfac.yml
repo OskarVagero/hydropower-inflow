@@ -1,0 +1,16 @@
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - jupyter
+  - jupyterlab_code_formatter
+  - black
+  - isort
+  - atlite =0.2.4
+  - numpy =1.23.2
+  - xarray =0.18.2
+  - pandas =1.2.5
+  - shapely <2.0.0
+  - pip
+  - pip:
+    - countrycode==0.2
