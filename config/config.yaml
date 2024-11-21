@@ -2,7 +2,14 @@ paths:
   gams: /opt/gams/gams47.1_linux_x64_64_sfx/
   shared_input: /home/oskar/shared_input/
   results: results
+  shapefile: '/home/oskar/shared_input/NO_bidding_zones_shapefile.zip'
 
 parameters:
-  regions: ["NO"] # NUTS ID
-  years: ['2017']
+  regions: ["NO1","NO2","NO3","NO4","NO5"] # region name(s)
+  years: ['2021'] # historical weather year(s)
+  
+# These dictionary are necessary to allow for custom shapefiles, other than the ones from Eurostat. You need to change id to the column name that contains the zones in the shapefile. Furthermore, the regions dictionary is necessary if the desired regions is different from how they are labeled in the shapefile.  
+
+dictionaries:
+  column_names: {"column_name" : 'id'}
+  regions: {"NO-NO1" : "NO1", "NO-NO2" : "NO2", "NO-NO3" : "NO3", "NO-NO4" : "NO4", "NO-NO5" : "NO5"}

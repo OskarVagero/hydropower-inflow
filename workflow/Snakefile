@@ -11,9 +11,14 @@ date_range=["01-01","12-31"]
 
 years = config["parameters"]["years"]
 
+shapefile = cwd / pathlib.Path(config["paths"]["shapefile"])
+
 regions = config["parameters"]["regions"]
 resultspath = cwd / pathlib.Path(config["paths"]["results"])
 shared_input_path = cwd / pathlib.Path(config["paths"]["shared_input"])
+
+column_names_dict = config["dictionaries"]["column_names"]
+regions_dict = config["dictionaries"]["regions"]
 
 localrules:
     all,
@@ -26,7 +31,7 @@ rule all:
 rule build_hydro_capfac:
     input:
         eiahydrogen="resources/EIA_hydro_generation_1995_2000_2014.csv",
-        euroshape=shared_input_path / "NUTS_RG_10M_2021_4326.geojson",
+        euroshape=shapefile,
         weatherdata=shared_input_path / "weatherdata/europe_{year}.nc",
     output:
         hydroresinfl=(
@@ -38,5 +43,7 @@ rule build_hydro_capfac:
         sharedinputpath=shared_input_path,
         regions=regions,
         date_range=date_range,
+        regions_dict=regions_dict,
+        column_names_dict=column_names_dict,
     notebook:
         "notebooks/highRES_build_hydro.py.ipynb"
